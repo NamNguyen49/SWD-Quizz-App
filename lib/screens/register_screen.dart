@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_quiz_app/utils/validate.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class RegisterScreen extends StatefulWidget {
   @override
@@ -15,6 +16,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
   bool _showPassword = false;
   bool _showRePassword = false;
 
+  // firebase
+  FirebaseAuth _auth = FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +27,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         title: Text('Đăng ký'),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(20.0),
         child: Form(
           key: _formKey,
           child: Column(
@@ -38,7 +42,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
                 validator: (value) => validateName(value),
               ),
-              SizedBox(height: 16.0),
+              SizedBox(height: 10.0),
               TextFormField(
                 controller: _emailController,
                 keyboardType: TextInputType.emailAddress,
@@ -49,7 +53,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
                 validator: (value) => validateEmail(value),
               ),
-              SizedBox(height: 16.0),
+              SizedBox(height: 10.0),
               TextFormField(
                 controller: _passwordController,
                 obscureText: !_showPassword,
@@ -70,7 +74,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
                 validator: (value) => validatePassword(value),
               ),
-              SizedBox(height: 16.0),
+              SizedBox(height: 10.0),
               TextFormField(
                 controller: _rePasswordController,
                 obscureText: !_showRePassword,
@@ -92,20 +96,74 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 validator: (value) =>
                     validateRePassword(value, _passwordController.text),
               ),
-              SizedBox(height: 30.0),
+              SizedBox(height: 15.0),
+              // ElevatedButton(
+              //   style: ElevatedButton.styleFrom(
+              //     backgroundColor:
+              //         Color(0xFF447077), // màu gradient từ trái sang phải
+              //     shadowColor: Colors.grey.withOpacity(0.5),
+              //     elevation: 5,
+              //   ),
+              //   child: Text('Đăng ký'),
+              //   onPressed: () {
+              //     if (_formKey.currentState!.validate()) {
+              //       //TODO: Xử lý đăng ký
+              //     }
+              //   },
+
+              // ),
+              // ElevatedButton(
+              //   style: ElevatedButton.styleFrom(
+              //     backgroundColor:
+              //         Color(0xFF447077), // màu gradient từ trái sang phải
+              //     shadowColor: Colors.grey.withOpacity(0.5),
+              //     elevation: 5,
+              //   ),
+              //   child: Text('Đăng ký'),
+              //   onPressed: () async {
+              //     if (_formKey.currentState!.validate()) {
+              //       _auth.createUserWithEmailAndPassword(
+              //           email: _emailController.text.toString(),
+              //           password: _passwordController.text.toString());
+              //     }
+              //   },
+              // ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  primary: Color(0xFF447077), // màu gradient từ trái sang phải
+                  backgroundColor: Color(0xFF447077),
                   shadowColor: Colors.grey.withOpacity(0.5),
                   elevation: 5,
                 ),
                 child: Text('Đăng ký'),
-                onPressed: () {
+                onPressed: () async {
                   if (_formKey.currentState!.validate()) {
-                    //TODO: Xử lý đăng ký
+                    try {
+                      await _auth.createUserWithEmailAndPassword(
+                          email: _emailController.text.toString(),
+                          password: _passwordController.text.toString());
+                      showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          title: Text('Đăng ký thành công'),
+                          content: Text('Register successfully'),
+                          actions: [
+                            TextButton(
+                              child: Text('OK'),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
+                        ),
+                      );
+                    } catch (e) {
+                      print(e.toString());
+                    }
                   }
                 },
               ),
+
               InkWell(
                 child: Text(
                   'Đã có tài khoản? Đăng nhập',

@@ -7,7 +7,24 @@ import 'package:flutter_quiz_app/screens/profile_screen.dart';
 import 'package:flutter_quiz_app/screens/question_detail_screen.dart';
 import 'package:flutter_quiz_app/widgets/cart_widget.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  bool _isLoggedIn = true;
+
+  void _logout() {
+    setState(() {
+      _isLoggedIn = false;
+    });
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => LoginScreen()),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,6 +91,47 @@ class HomeScreen extends StatelessWidget {
               );
             },
           ),
+          // PopupMenuButton(
+          //   itemBuilder: (context) => [
+          //     PopupMenuItem(
+          //       child: InkWell(
+          //         onTap: () {
+          //           Navigator.push(
+          //             context,
+          //             MaterialPageRoute(builder: (context) => ProfileScreen()),
+          //           );
+          //         },
+          //         child: Text('Profile'),
+          //       ),
+          //     ),
+          //     PopupMenuItem(
+          //       child: InkWell(
+          //         onTap: () {
+          //           Navigator.push(
+          //             context,
+          //             MaterialPageRoute(builder: (context) => PaymentScreen()),
+          //           );
+          //         },
+          //         child: Text('Payment'),
+          //       ),
+          //     ),
+          //     PopupMenuItem(
+          //       child: Text('Setting'),
+          //     ),
+          //     PopupMenuItem(
+          //       child: Text('Login'),
+          //       value: 'login',
+          //     ),
+          //   ],
+          //   onSelected: (value) {
+          //     if (value == 'login') {
+          //       Navigator.push(
+          //         context,
+          //         MaterialPageRoute(builder: (context) => LoginScreen()),
+          //       );
+          //     }
+          //   },
+          // )
           PopupMenuButton(
             itemBuilder: (context) => [
               PopupMenuItem(
@@ -102,8 +160,8 @@ class HomeScreen extends StatelessWidget {
                 child: Text('Setting'),
               ),
               PopupMenuItem(
-                child: Text('Login'),
-                value: 'login',
+                child: Text(_isLoggedIn ? 'Logout' : 'Login'),
+                value: _isLoggedIn ? 'logout' : 'login',
               ),
             ],
             onSelected: (value) {
@@ -111,7 +169,15 @@ class HomeScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => LoginScreen()),
-                );
+                ).then((value) {
+                  if (value == true) {
+                    setState(() {
+                      _isLoggedIn = true;
+                    });
+                  }
+                });
+              } else if (value == 'logout') {
+                _logout();
               }
             },
           )
