@@ -225,7 +225,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           );
                         },
                         child: CartWidget(
-                          title: "MAS291",
+                          title: "Assigment_ISC_",
                         ),
                       ),
                     ),
@@ -241,7 +241,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           );
                         },
                         child: CartWidget(
-                          title: "ISC291",
+                          title: "Project_sale_app",
                         ),
                       ),
                     ),
@@ -263,7 +263,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           );
                         },
                         child: CartWidget(
-                          title: "IOT301",
+                          title: "ResearchMkt",
                         ),
                       ),
                     ),
@@ -279,7 +279,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           );
                         },
                         child: CartWidget(
-                          title: "PRJ301",
+                          title: "Template_recycleview",
                         ),
                       ),
                     ),
@@ -337,17 +337,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   ),
-                  // Padding(
-                  //   padding: EdgeInsets.all(16.0),
-                  //   child: Text(
-                  //     'Câu hỏi phổ biến',
-                  //     style: GoogleFonts.montserrat(
-                  //       color: Colors.white,
-                  //       fontSize: 18.0,
-                  //       fontWeight: FontWeight.bold,
-                  //     ),
-                  //   ),
-                  // ),
                   Padding(
                     padding: EdgeInsets.all(16.0),
                     child: Text(
@@ -360,7 +349,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   ),
-
                   Expanded(
                     child: SizedBox(
                       height: 200, // giới hạn chiều cao của ListView.builder

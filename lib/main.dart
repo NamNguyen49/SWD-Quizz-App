@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       getPages: [
-        // GetPage(name: '/', page: () => RegisterScreen()),
+        // GetPage(name: '/', page: () => HomeScreen()),
         GetPage(name: '/', page: () => LoginScreen()),
 
         // GetPage(name: '/questions', page: () => QuestionScreen()),
